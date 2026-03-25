@@ -129,23 +129,33 @@ class SmartTokenAllocator:
             if token.id in self._token_managers:
                 return self._token_managers[token.id]
 
-            # 获取解密的 refresh token
-            refresh_token = user_db.get_decrypted_token(token.id)
-            if not refresh_token:
+            # 获取完整凭证信息（包括 IDC 的 client_id/client_secret）
+            creds = user_db.get_token_credentials(token.id)
+            if not creds or not creds.get("refresh_token"):
                 raise NoTokenAvailable(f"Failed to decrypt token {token.id}")
 
             manager = KiroAuthManager(
-                refresh_token=refresh_token,
+                refresh_token=creds["refresh_token"],
                 region=settings.region,
-                profile_arn=settings.profile_arn
+                profile_arn=settings.profile_arn,
+                client_id=creds.get("client_id"),
+                client_secret=creds.get("client_secret"),
             )
 
             self._token_managers[token.id] = manager
             return manager
 
     def record_usage(self, token_id: int, success: bool) -> None:
-        """记录 Token 使用结果。"""
+        """记录 Token 使用结果，并检查 refresh token 是否已续期。"""
         user_db.record_token_usage(token_id, success)
+
+        # 检查 refresh token 是否在内存中被刷新，写回数据库实现持久化续期
+        if token_id in self._token_managers:
+            manager = self._token_managers[token_id]
+            creds = user_db.get_token_credentials(token_id)
+            if creds and manager._refresh_token and manager._refresh_token != creds.get("refresh_token"):
+                logger.info(f"Token #{token_id} refresh token renewed, persisting to database")
+                user_db.update_token_refresh_token(token_id, manager._refresh_token)
 
     def clear_manager(self, token_id: int) -> None:
         """清除缓存的 AuthManager。"""

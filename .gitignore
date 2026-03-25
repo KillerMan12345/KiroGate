@@ -20,3 +20,16 @@ Thumbs.db
 # Env
 .env
 .env.local
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Credentials (NEVER commit)
+kiro-merged-creds.json
+kiro-creds.json
+kiro-client.json
+
+# Data
+data/

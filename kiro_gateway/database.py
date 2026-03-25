@@ -1054,6 +1054,29 @@ class UserDatabase:
             account_checked_at=row["account_checked_at"] if "account_checked_at" in row.keys() else None,
         )
 
+    def update_token_refresh_token(self, token_id: int, new_refresh_token: str) -> bool:
+        """
+        Update refresh token in database after auto-renewal.
+
+        Args:
+            token_id: Token ID
+            new_refresh_token: New refresh token from IDC/Social refresh
+
+        Returns:
+            True if updated successfully
+        """
+        with self._lock:
+            with self._get_conn() as conn:
+                encrypted = self._encrypt_token(new_refresh_token)
+                conn.execute(
+                    "UPDATE tokens SET refresh_token_encrypted = ? WHERE id = ?",
+                    (encrypted, token_id)
+                )
+                updated = conn.total_changes > 0
+                if updated:
+                    logger.info(f"Token #{token_id} refresh token updated in database")
+                return updated
+
     def update_token_account_info(
         self,
         token_id: int,
