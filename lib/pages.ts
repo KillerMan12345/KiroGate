@@ -107,8 +107,12 @@ export function commonFooter(): string {
 // 可用模型列表
 // ============================================================================
 const AVAILABLE_MODELS = [
-  'claude-opus-4-5', 'claude-sonnet-4-5', 'claude-sonnet-4',
-  'claude-haiku-4-5', 'claude-3-7-sonnet-20250219'
+  'auto',
+  'claude-opus-4-6', 'claude-sonnet-4-6',
+  'claude-opus-4-5', 'claude-sonnet-4-5',
+  'claude-sonnet-4', 'claude-haiku-4-5',
+  'deepseek-v3.2', 'minimax-m2.5', 'minimax-m2.1',
+  'qwen3-coder-next',
 ]
 
 // ============================================================================

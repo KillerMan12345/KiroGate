@@ -1149,7 +1149,7 @@ client = OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="claude-sonnet-4-5",
+    model="claude-sonnet-4-6",
     messages=[{{"role": "user", "content": "Hello!"}}],
     stream=True
 )
@@ -1172,7 +1172,7 @@ client = anthropic.Anthropic(
 )
 
 message = client.messages.create(
-    model="claude-sonnet-4-5",
+    model="claude-sonnet-4-6",
     max_tokens=1024,
     messages=[{{"role": "user", "content": "Hello!"}}]
 )
@@ -1190,7 +1190,7 @@ curl http://localhost:8000/v1/chat/completions \\
   -H "Authorization: Bearer YOUR_PROXY_API_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{{
-    "model": "claude-sonnet-4-5",
+    "model": "claude-sonnet-4-6",
     "messages": [{{"role": "user", "content": "Hello!"}}]
   }}'</pre>
           </div>

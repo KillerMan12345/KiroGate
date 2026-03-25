@@ -476,10 +476,9 @@ GITHUB_USER_URL: str = "https://api.github.com/user"
 
 # 慢模型列表 - 这些模型需要更长的超时时间
 SLOW_MODELS: frozenset = frozenset({
-    "claude-opus-4-5",
-    "claude-opus-4-5-20251101",
-    "claude-3-opus",
-    "claude-3-opus-20240229",
+    "claude-opus-4-6", "claude-opus-4.6",
+    "claude-opus-4-5", "claude-opus-4-5-20251101", "claude-opus-4.5",
+    "claude-3-opus", "claude-3-opus-20240229",
 })
 
 
@@ -498,41 +497,67 @@ KIRO_Q_HOST_TEMPLATE: str = "https://q.{region}.amazonaws.com"
 
 # External model names (OpenAI compatible) -> Kiro internal ID
 MODEL_MAPPING: Dict[str, str] = {
-    # Claude Opus 4.5 - Top tier model
+    # Claude Opus 4.6
+    "claude-opus-4-6": "claude-opus-4.6",
+    "claude-opus-4.6": "claude-opus-4.6",
+
+    # Claude Sonnet 4.6
+    "claude-sonnet-4-6": "claude-sonnet-4.6",
+    "claude-sonnet-4.6": "claude-sonnet-4.6",
+
+    # Claude Opus 4.5
     "claude-opus-4-5": "claude-opus-4.5",
     "claude-opus-4-5-20251101": "claude-opus-4.5",
+    "claude-opus-4.5": "claude-opus-4.5",
 
-    # Claude Haiku 4.5 - Fast model
+    # Claude Sonnet 4.5
+    "claude-sonnet-4-5": "claude-sonnet-4.5",
+    "claude-sonnet-4-5-20250929": "claude-sonnet-4.5",
+    "claude-sonnet-4.5": "claude-sonnet-4.5",
+
+    # Claude Sonnet 4
+    "claude-sonnet-4": "claude-sonnet-4",
+    "claude-sonnet-4-20250514": "claude-sonnet-4",
+
+    # Claude Haiku 4.5
     "claude-haiku-4-5": "claude-haiku-4.5",
     "claude-haiku-4-5-20251001": "claude-haiku-4.5",
     "claude-haiku-4.5": "claude-haiku-4.5",
 
-    # Claude Sonnet 4.5 - Enhanced model
-    "claude-sonnet-4-5": "CLAUDE_SONNET_4_5_20250929_V1_0",
-    "claude-sonnet-4-5-20250929": "CLAUDE_SONNET_4_5_20250929_V1_0",
-
-    # Claude Sonnet 4 - Balanced model
-    "claude-sonnet-4": "CLAUDE_SONNET_4_20250514_V1_0",
-    "claude-sonnet-4-20250514": "CLAUDE_SONNET_4_20250514_V1_0",
-
-    # Claude 3.7 Sonnet - Legacy model
+    # Claude 3.7 Sonnet - Legacy
     "claude-3-7-sonnet-20250219": "CLAUDE_3_7_SONNET_20250219_V1_0",
 
-    # Convenience aliases
-    "auto": "claude-sonnet-4.5",
+    # DeepSeek
+    "deepseek-v3.2": "deepseek-3.2",
+    "deepseek-3.2": "deepseek-3.2",
+    "deepseek-v3-2": "deepseek-3.2",
+
+    # MiniMax
+    "minimax-m2.5": "minimax-m2.5",
+    "minimax-m2-5": "minimax-m2.5",
+    "minimax-m2.1": "minimax-m2.1",
+    "minimax-m2-1": "minimax-m2.1",
+
+    # Qwen
+    "qwen3-coder-next": "qwen3-coder-next",
+
+    # Auto - Kiro smart routing
+    "auto": "auto",
 }
 
 # Available models list for /v1/models endpoint
 AVAILABLE_MODELS: List[str] = [
+    "auto",
+    "claude-opus-4-6",
+    "claude-sonnet-4-6",
     "claude-opus-4-5",
-    "claude-opus-4-5-20251101",
-    "claude-haiku-4-5",
-    "claude-haiku-4-5-20251001",
     "claude-sonnet-4-5",
-    "claude-sonnet-4-5-20250929",
     "claude-sonnet-4",
-    "claude-sonnet-4-20250514",
-    "claude-3-7-sonnet-20250219",
+    "claude-haiku-4-5",
+    "deepseek-v3.2",
+    "minimax-m2.5",
+    "minimax-m2.1",
+    "qwen3-coder-next",
 ]
 
 # ==================================================================================================
